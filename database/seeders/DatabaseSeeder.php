@@ -25,5 +25,9 @@ class DatabaseSeeder extends Seeder
             'education_level' => 'bachelor',
             'majors' =>  "Teknik Informatika"
         ]);
+
+        $this->call([
+            MessageSeeder::class
+        ]);
     }
 }

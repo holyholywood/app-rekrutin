@@ -22,9 +22,10 @@ class FileController extends Controller
         if ($validator->fails()) {
             return $this->sendError(422, "Ukuran file terlalu besar");
         }
-
-
-
-        return $this->sendResponse($Service->saveFile($request->file('file')));
+        try {
+            return $this->sendResponse($Service->saveFile($request->file('file')));
+        } catch (\Throwable $th) {
+            return $this->sendError($th->getCode(), $th->getMessage());
+        }
     }
 }

@@ -6,23 +6,37 @@ use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\Http\Response\ResponseTraits;
+use App\Services\MessageService;
+use Illuminate\Http\Request as HttpRequest;
 
 class MessageController extends Controller
 {
+    use ResponseTraits;
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MessageService $Service, HttpRequest $request)
     {
-        //
+        return $this->sendResponse($Service->getMessage(1));
+    }
+
+    public function userMessageList()
+    {
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMessageRequest $request)
+    public function store(MessageService $Service, StoreMessageRequest $request)
     {
-        //
+        return $this->sendResponse($Service->createNewMessage($request->all()), 201);
     }
 
     /**

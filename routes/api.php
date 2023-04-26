@@ -85,9 +85,8 @@ Route::prefix('v1')->group(function () {
      */
 
     Route::controller(MessageController::class)->name('Message')->prefix('messages')->group(function () {
-        Route::get('/', 'index')->name('Index');
-        Route::get('/{id}', 'show')->name('Show');
-        Route::get('/{from}/{to}/read', 'read')->name('Read');
+        Route::get('/{target_id}', 'index')->name('Index');
+        // Route::get('/{target_id}', 'show')->name('Show');
         Route::post('/', 'store')->name('Store');
         Route::patch('/{id}', 'update')->name('Update');
         Route::delete('/{id}', 'destroy')->name('Destroy');
