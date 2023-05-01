@@ -25,6 +25,16 @@ return new class extends Migration
                 'announced'
             ])->default('documents');
             $table->timestamps();
+
+
+            $table->foreign('applicants_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('job_id')
+                ->references('id')
+                ->on('jobs')
+                ->onDelete('cascade');
         });
     }
 

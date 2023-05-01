@@ -3,6 +3,7 @@
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\v1\ApplicationController;
 use App\Http\Controllers\v1\AuthController;
+use App\Http\Controllers\v1\ConversationController;
 use App\Http\Controllers\v1\JobController;
 use App\Http\Controllers\v1\MessageController;
 use App\Http\Controllers\v1\UserController;
@@ -85,11 +86,30 @@ Route::prefix('v1')->group(function () {
      */
 
     Route::controller(MessageController::class)->name('Message')->prefix('messages')->group(function () {
-        Route::get('/{target_id}', 'index')->name('Index');
-        // Route::get('/{target_id}', 'show')->name('Show');
-        Route::post('/', 'store')->name('Store');
-        Route::patch('/{id}', 'update')->name('Update');
-        Route::delete('/{id}', 'destroy')->name('Destroy');
+        // get My Message
+        Route::get('/', 'myMessage')->name('MyMessage');
+        // get My Unread Message
+        Route::get('/notifications', 'showNotificationCount')->name('ShowNotificationCount');
+        // get My Message With interlocutors
+        Route::get('/{interlocutors_id}', 'myMessageWith')->name('MyMessageWith');
+        // Send Message to interlocutors
+        Route::post('/', 'send')->name('SendMessage');
+    });
+
+
+    /**
+     ** Conversation Routes
+     */
+
+    Route::controller(ConversationController::class)->name('Conversation')->prefix('conversations')->group(function () {
+        // get My Message
+        // Route::get('/', 'myMessage')->name('MyMessage');
+        // // get My Unread Message
+        // Route::get('/notifications', 'showNotificationCount')->name('ShowNotificationCount');
+        // // get My Message With interlocutors
+        // Route::get('/{interlocutors_id}', 'myMessageWith')->name('MyMessageWith');
+        // Send Message to interlocutors
+        Route::post('/', 'store')->name('storeMessage');
     });
 
 

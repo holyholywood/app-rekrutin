@@ -23,6 +23,11 @@ return new class extends Migration
             $table->unsignedBigInteger('recruiter_id');
             $table->dateTime('due_date');
             $table->timestamps();
+
+            $table->foreign('recruiter_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

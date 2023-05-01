@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
-            $table->string('name');
+            $table->string('firstName');
+            $table->string('lastName');
             $table->string('password');
             $table->string('profile_picture')->default('https://ui-avatars.com/api/app');
             $table->date('birth_date')->nullable();
@@ -29,7 +30,7 @@ return new class extends Migration
                 'bachelor'
             ])->nullable()->default('none');
             $table->string('majors')->nullable();
-            $table->enum('role', ['recruiter', 'applicant', 'user']);
+            $table->enum('role', ['recruiter', 'applicant', 'user'])->default('applicant');
             $table->timestamps();
         });
     }

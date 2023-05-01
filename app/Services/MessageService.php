@@ -2,8 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Conversation;
+use App\Models\Message;
 use App\Repositories\MessageRepository;
+use Error;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class MessageService
 {
@@ -14,28 +19,7 @@ class MessageService
         $this->Message = new MessageRepository();
     }
 
-    public function getMessage($receiver_id = null)
+    public function save($data, $conversation_id)
     {
-        return $this->Message->get($receiver_id);
-    }
-
-    public function createNewMessage($data)
-    {
-        $data['sender_id'] = Auth::id();
-
-        return $this->Message->save($data);
-    }
-
-    public function updateMessage($selector = null, $data)
-    {
-
-        $data['recruiter_id'] = Auth::user()->id;
-
-        return $this->Message->save($data, $selector);
-    }
-
-    public function deleteMessage($selector)
-    {
-        return $this->Message->delete($selector);
     }
 }

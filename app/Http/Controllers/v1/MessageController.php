@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
 use App\Http\Response\ResponseTraits;
+use App\Models\Conversation;
+use App\Models\Message;
+use App\Services\ConversationService;
 use App\Services\MessageService;
-use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class MessageController extends Controller
 {
@@ -19,47 +23,34 @@ class MessageController extends Controller
         $this->middleware('auth:api');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(MessageService $Service, HttpRequest $request)
-    {
-        return $this->sendResponse($Service->getMessage(1));
-    }
-
-    public function userMessageList()
-    {
-    }
 
     /**
-     * Store a newly created resource in storage.
+     ** get My Message 
      */
-    public function store(MessageService $Service, StoreMessageRequest $request)
+    public function myMessage(ConversationService $Service)
     {
-        return $this->sendResponse($Service->createNewMessage($request->all()), 201);
+        return  $this->sendResponse($Service->getConversationList());
     }
-
     /**
-     * Display the specified resource.
+     ** get My Message With interlocutors
      */
-    public function show(Message $message)
+    public function myMessageWith(ConversationService $Service, Request $request)
     {
-        //
+        return  $this->sendResponse($Service->getConversation($request->interlocutors_id));
     }
-
     /**
-     * Update the specified resource in storage.
+     ** get My Unread Message
      */
-    public function update(UpdateMessageRequest $request, Message $message)
+    public function showNotificationCount(MessageService $Service)
     {
-        //
+        return  $this->sendResponse('test');
     }
-
     /**
-     * Remove the specified resource from storage.
+     ** Send Message to interlocutors 
      */
-    public function destroy(Message $message)
+    public function send(ConversationService $Service, StoreMessageRequest $request)
     {
-        //
+
+        return $this->sendResponse($Service->create($request->all()), 201);
     }
 }

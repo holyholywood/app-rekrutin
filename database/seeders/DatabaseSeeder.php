@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
     {
 
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
+            'firstName' => 'Test',
+            'lastName' => 'User',
             'email' => 'test@mail.com',
             'password' => Hash::make('admin'),
             'role' => 'applicant',
@@ -25,9 +26,21 @@ class DatabaseSeeder extends Seeder
             'education_level' => 'bachelor',
             'majors' =>  "Teknik Informatika"
         ]);
-
-        $this->call([
-            MessageSeeder::class
+        \App\Models\User::factory()->create([
+            'firstName' => 'Applicants',
+            'lastName' => 'First',
+            'email' => 'applicants1@mail.com',
+            'password' => Hash::make('applicant'),
+            'role' => 'applicant',
+            'birth_date' => date("Y/m/d"),
+            'address' => 'Jl. Jamrud IV Blok A. 25 No. 4 Perumahan Permata Balaraja Kec. Balaraja, Kab. Tangerang, Banten',
+            'phone' => '082117416500',
+            'education_level' => 'bachelor',
+            'majors' =>  "Teknik Informatika"
         ]);
+
+        // $this->call([
+        //     MessageSeeder::class
+        // ]);
     }
 }
